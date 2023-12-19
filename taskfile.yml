@@ -1,0 +1,15 @@
+version: '3'
+tasks:
+  default:
+    desc: "task - for check all tasks"
+    cmds:
+      - task --list-all
+  scrapper:
+    desc: "Command for running scrapper"
+    cmds:
+      - python3 backend/scrapper/main.py
+  scrapper_dep:
+    desc: "Command for running install dependencies for scrapper"
+    cmds:
+      - pip3 install -r backend/scrapper/requirements.txt
+
