@@ -1,4 +1,4 @@
-from controller.grpc.file import FileService
+from .file import FileService
 
 
 def init_routes():

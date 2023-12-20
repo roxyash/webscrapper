@@ -1,9 +1,12 @@
+import time
+
 from dotenv import load_dotenv
 
 from controller.grpc.router import init_routes
 from pkg.config import get_config
 from pkg.logger import get_logger
-from server.grpc.server import GRPCServer, GRPCConfig
+from server.grpc.config import GRPCConfig
+from server.grpc.server import GRPCServer
 
 # Get config and logger
 load_dotenv(".env")
@@ -68,14 +71,14 @@ def main():
     # Start grpc server
     try:
         server.start()
+        logger.info(f"server started on port {conf.scrapper_port}")
+        while True:
+            time.sleep(86400)
+    except KeyboardInterrupt:
+        server.stop(0)
     except Exception as e:
         logger.error(f'Error while starting grpc server: {e}')
         server.stop(0)
-        server.wait_for_termination(0)
-        return
-
-    # Wait for termination
-    server.wait_for_termination(0)
 
 
 if __name__ == '__main__':

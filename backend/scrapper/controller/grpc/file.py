@@ -1,5 +1,5 @@
-from webscrapper_proto.gen.python.scrapper.scrapper_pb import *
-from webscrapper_proto.gen.python.scrapper.scrapper_pb_grpc import *
+from gen.python.scrapper.scrapper_pb import *
+from gen.python.scrapper.scrapper_pb_grpc import *
 
 
 class FileService(FileServiceServicer):

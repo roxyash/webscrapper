@@ -1,20 +1,20 @@
 from concurrent import futures
 
-import grpc
+from gen.python.scrapper.scrapper_pb_grpc import *
 
-from config import Config
+from .config import GRPCConfig
 
 
 class GRPCServer:
-    def __init__(self, config: Config, handlers):
-        self.server = self._init_server(handlers)
-        self.config = config
+    def __init__(self, config: GRPCConfig, handlers):
+        self._config = config
+        self._server = self._init_server(handlers)
 
     def start(self):
         """
         Method for starting grpc server
         """
-        self.server.start()
+        self._server.start()
 
     def stop(self, grace: int = 0):
         """
@@ -22,7 +22,7 @@ class GRPCServer:
         :param grace: value in seconds
         :return:
         """
-        self.server.stop(grace)
+        self._server.stop(grace)
 
     def wait_for_termination(self, timeout: int = 0):
         """
@@ -30,7 +30,7 @@ class GRPCServer:
         :param timeout: value in seconds
         :return:
         """
-        self.server.wait_for_termination(timeout)
+        self._server.wait_for_termination(timeout)
 
     def _init_server(self, handlers: str):
         """
@@ -38,9 +38,8 @@ class GRPCServer:
         :param handlers: list of handlers
         :return: grpc server
         """
-        server = grpc.server(futures.ThreadPoolExecutor(max_workers=self.config.count_workers))
+        server = grpc.server(futures.ThreadPoolExecutor(max_workers=self._config.count_workers))
         for handler in handlers:
-            print(handler)
-            # file_pb2_grpc.add_FileServiceServicer_to_server(handler, server)
-        server.add_insecure_port(f'[::]:{self.config.port}')
+            add_FileServiceServicer_to_server(handler, server)
+        server.add_insecure_port(f'[::]:{self._config.port}')
         return server

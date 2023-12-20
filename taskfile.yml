@@ -1,4 +1,7 @@
 version: '3'
+
+dotenv: [ '.env' ]
+
 tasks:
   default:
     desc: "task - for check all tasks"
@@ -12,4 +15,10 @@ tasks:
     desc: "Command for running install dependencies for scrapper"
     cmds:
       - pip3 install -r backend/scrapper/requirements.txt
+  scrapper_req:
+    desc: "Command for collect requirements for scrapper"
+    cmds:
+      - pip3 freeze > backend/scrapper/requirements.txt
+      - echo "git+https://${GITHUB_TOKEN}@github.com/roxyash/webscrapper_proto.git" >> backend/scrapper/requirements.txt
+
 
