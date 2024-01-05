@@ -52,6 +52,19 @@ Write example http request:
 GET http://localhost:8080/api/preset/unique_code/report
 ```
 
+## Example .env file
+```dotenv
+# Sharing settings
+MODE=prod
 
+# Scrapper app settings
+SCRAPPER_PORT=8000
+SCRAPPER_HOST=0.0.0.0
+SCRAPPER_COUNT_WORKERS=10
+
+
+# Deployment settings
+GITHUB_TOKEN=
+```
 
 
