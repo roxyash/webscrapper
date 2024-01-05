@@ -1,4 +1,4 @@
-from service.service import Service
+from ...service.service import Service
 
 from .file import FileHandler
 
